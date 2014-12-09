@@ -1,0 +1,14 @@
+#! /bin/bash
+
+headerDir=.
+libDir=.
+
+cmd="gcc -I$headerDir $* "
+
+# are we at the linker step? 
+res=$(echo   "$cmd"   | grep " -c ")
+if [ "$res" ==  "" ]; then
+   cmd+=" $libDir/mpi.o"
+fi 
+
+echo $cmd && eval $cmd 
