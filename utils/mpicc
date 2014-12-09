@@ -1,14 +1,35 @@
 #! /bin/bash
 
-headerDir=.
-libDir=.
+# headerDir="/home/aberer/proj/mpi-seq-mock/src"
+# libDir="/home/aberer/proj/mpi-seq-mock/src"
+
+
+# if [ ! -d "$headerDir"  ] || [ ! -d "$libDir" ] ; then
+#    echo "\n\nplease hardcode the position of your mpi.o \n\n"
+#    exit 1 
+# fi 
+
+# if [ ! -f $libDir ]; then
+#    curdir=$(pwd)
+#    cd $libDir ; make -q 
+#    cd $curdir
+# fi
+
+
+# headerDir=$(dirname $0)/../src/
+# libDir=$(readlink -f $(dirname $0)/../src/
+
+
+dir=$(dirname $(readlink -f $0))/../src/
+headerDir=$dir
+libDir=$dir
 
 cmd="gcc -I$headerDir $* "
 
 # are we at the linker step? 
 res=$(echo   "$cmd"   | grep " -c ")
 if [ "$res" ==  "" ]; then
-   cmd+=" $libDir/mpi.o"
+   cmd+=" $libDir/libmpi.a"
 fi 
 
 echo $cmd && eval $cmd 
